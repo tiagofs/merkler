@@ -8,6 +8,11 @@
     "packages/*"
   ],
   "scripts": {
-    "start": "yarn workspace react-frontend start"
+    "build": "yarn workspace next-app build",
+    "start": "yarn workspace next-app start",
+    "dev": "yarn workspace next-app dev"
+  },
+  "dependencies": {
+    "next": "^13.1.6"
   }
 }
