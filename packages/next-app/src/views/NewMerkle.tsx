@@ -2,7 +2,7 @@ import { Box, Button, Card, CardBody, CardFooter, CardHeader, Divider, FormContr
 import { ParseWorkerConfig } from 'papaparse'
 import React, { useState } from 'react'
 import { readString } from 'react-papaparse'
-import { ethers } from "ethers"
+import { BigNumber, ethers } from "ethers"
 
 const { MerkleTree } = require('merkletreejs')
 const keccak256 = require('keccak256')
@@ -19,7 +19,7 @@ type ReadStringResult = {
 
 type DistribuitionMetadata_Id = number
 type DistribuitionMetadata_Address = string
-type DistribuitionMetadata_EthAmount = bigint
+type DistribuitionMetadata_EthAmount = BigNumber
 
 
 type DistribuitionData =
@@ -52,7 +52,7 @@ export default function NewMerkle({ }: Props) {
 
         // Here we're checking for invalid inputs.
         if (!(line.length === 2) ||  // Checks the line contains 2 entries
-          !ethers.isAddress(line[0]) ||  // Checks if the first entry in the line is an adress
+          !ethers.utils.isAddress(line[0]) ||  // Checks if the first entry in the line is an adress
           !(typeof line[1] === "number")) {
 
           setIsRecipientsInvalid(true)
@@ -70,7 +70,7 @@ export default function NewMerkle({ }: Props) {
         setEthRequired(ethAmountRequired)
 
         let transformedData: DistribuitionData = results.data.map((element, index) => {
-          return [index, element[0], ethers.parseUnits(String(element[1]), decimals)]
+          return [index, element[0], ethers.utils.parseUnits(String(element[1]), decimals)]
         })
 
         console.log({ transformedData })
@@ -98,7 +98,7 @@ export default function NewMerkle({ }: Props) {
 
   const hashToken = (index, account, amount) => {
     return Buffer.from(
-      ethers.solidityPackedKeccak256(["uint256", "address", "uint256"], [index, account, amount]).slice(2),
+      ethers.utils.solidityKeccak256(["uint256", "address", "uint256"], [index, account, amount]).slice(2),
       "hex",
     );
   }
