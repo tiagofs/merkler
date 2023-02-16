@@ -114,13 +114,12 @@ export default function NewMerkle({ }: Props) {
       console.log('newMerkleTree: ', newMerkleTree);
       console.log('newMerkleTree.getHexRoot(): ', newMerkleTree.getHexRoot());
       setMerkleTree(newMerkleTree);  // set state or return in this fn?
-      
     }
   }
 
   const onClickDeployMerkle = async () => {
 
-    await pinDistribuitionData()
+    // await pinDistribuitionData()
 
     createMerkleTree()
 
